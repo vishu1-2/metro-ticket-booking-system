@@ -1,9 +1,9 @@
 # 🚇 Metro Ticket Booking System
 
 A **Flask-based web application** for booking metro tickets.
-This project demonstrates **DBMS concepts such as database design, relational schemas, foreign keys, and CRUD operations** using MySQL.
+This project demonstrates **Database Management System (DBMS) concepts** such as relational database design, foreign keys, and SQL queries using MySQL.
 
-The system allows users to register, log in, book metro tickets, and view their tickets with a QR code.
+The system allows users to register, log in, book metro tickets, and retrieve previously booked tickets with QR codes.
 
 ---
 
@@ -14,29 +14,29 @@ The system allows users to register, log in, book metro tickets, and view their 
 * Metro Ticket Booking
 * Automatic Fare Calculation
 * QR Code Ticket Generation
-* Ticket Retrieval
+* View Previously Booked Tickets
 * Kochi Metro Station Database
 
 ---
 
 # 🛠 Tech Stack
 
-Backend
+### Backend
 
 * Python
 * Flask
 
-Database
+### Database
 
 * MySQL
 
-Frontend
+### Frontend
 
 * HTML
 * CSS
 * JavaScript
 
-Libraries
+### Libraries
 
 * qrcode
 * pillow
@@ -59,7 +59,8 @@ metro_ticket_system
 │   ├── login.html
 │   ├── register.html
 │   ├── book_ticket.html
-│   └── ticket.html
+│   ├── ticket.html
+│   └── tickets.html
 │
 └── static
     └── style.css
@@ -69,22 +70,26 @@ metro_ticket_system
 
 # ⚙️ Installation and Setup
 
-### 1️⃣ Clone the Repository
+## 1️⃣ Clone the Repository
 
 ```
 git clone https://github.com/vishu1-2/metro-ticket-booking-system.git
 cd metro-ticket-booking-system
 ```
 
-### 2️⃣ Install Dependencies
+---
+
+## 2️⃣ Install Dependencies
 
 ```
 pip install -r requirements.txt
 ```
 
-### 3️⃣ Setup Database
+---
 
-Open MySQL and run:
+## 3️⃣ Setup the Database
+
+Open MySQL and run the SQL file:
 
 ```
 database.sql
@@ -92,13 +97,13 @@ database.sql
 
 This will create:
 
-* metro_db database
-* required tables
+* `metro_ticket_system` database
+* all required tables
 * sample Kochi metro stations
 
 ---
 
-### 4️⃣ Configure Database Connection
+## 4️⃣ Configure Database Connection
 
 Inside `app.py`, update your MySQL credentials:
 
@@ -107,19 +112,19 @@ db = mysql.connector.connect(
     host="localhost",
     user="root",
     password="your_password",
-    database="metro_db"
+    database="metro_ticket_system"
 )
 ```
 
 ---
 
-### 5️⃣ Run the Application
+## 5️⃣ Run the Application
 
 ```
 python app.py
 ```
 
-Open browser:
+Then open your browser:
 
 ```
 http://127.0.0.1:5000
@@ -127,34 +132,122 @@ http://127.0.0.1:5000
 
 ---
 
-# 🗄 Database Schema
+# 🔗 API Endpoints
 
-Main entities used:
+### Register User
 
-* User
-* Passenger
-* Station
-* Route
-* Ticket
-* Payment
+POST `/register`
 
-These entities demonstrate relational database concepts such as:
+Example Request
 
-* Primary Keys
-* Foreign Keys
-* One-to-Many relationships
+```
+{
+  "username": "user1",
+  "email": "user@email.com",
+  "password": "password123"
+}
+```
 
 ---
 
-# 🎟 Ticket System
+### Login User
 
-When a user books a ticket:
+POST `/login`
 
-1. Stations are selected
-2. Fare is automatically calculated
-3. Ticket is stored in the database
-4. A QR code is generated for the ticket
-5. The ticket can be retrieved later
+Example Request
+
+```
+{
+  "email": "user@email.com",
+  "password": "password123"
+}
+```
+
+---
+
+### Get All Stations
+
+GET `/stations`
+
+Returns all available metro stations.
+
+---
+
+### Book Ticket
+
+POST `/book-ticket`
+
+Example Request
+
+```
+{
+  "passenger_id": 1,
+  "from_station": 3,
+  "to_station": 8,
+  "travel_date": "2026-03-15"
+}
+```
+
+Example Response
+
+```
+{
+  "message": "Ticket booked successfully",
+  "ticket_id": 21,
+  "fare": 50
+}
+```
+
+---
+
+### Get Ticket Details
+
+GET `/ticket/<ticket_id>`
+
+Example
+
+```
+/ticket/5
+```
+
+---
+
+### View All Tickets of a Passenger
+
+GET `/tickets/<passenger_id>`
+
+Returns all previously booked tickets.
+
+---
+
+# 🗄 Database Entities
+
+The system contains the following tables:
+
+* **User** – stores login credentials
+* **Passenger** – stores passenger details
+* **Station** – stores metro station information
+* **Route** – defines metro routes
+* **Ticket** – stores ticket booking information
+* **Payment** – stores payment details
+
+These tables demonstrate relational database concepts such as:
+
+* Primary Keys
+* Foreign Keys
+* One-to-Many Relationships
+
+---
+
+# 🎟 Ticket Booking Workflow
+
+1. User registers an account
+2. User logs into the system
+3. User selects **from station** and **to station**
+4. Fare is automatically calculated
+5. Ticket is stored in the database
+6. QR code is generated for the ticket
+7. User can view previously booked tickets
 
 ---
 
@@ -162,10 +255,10 @@ When a user books a ticket:
 
 This project was developed as part of a **Database Management Systems (DBMS) mini project** to demonstrate:
 
-* Relational database design
+* Database schema design
 * SQL table creation
-* Backend database connectivity
-* Full-stack application development
+* Backend–database integration
+* Full-stack web application development
 
 ---
 
