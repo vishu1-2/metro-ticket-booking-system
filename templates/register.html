@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Register</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<header>
+<h1>Metro Ticket System</h1>
+</header>
+
+<div class="container">
+
+<h2>Register</h2>
+
+<input type="text" id="username" placeholder="Username">
+
+<input type="email" id="email" placeholder="Email">
+
+<input type="password" id="password" placeholder="Password">
+
+<button onclick="register()">Register</button>
+
+<p class="center">
+Already have an account?
+<a href="/login-page">Login</a>
+</p>
+
+</div>
+
+<script>
+
+function register(){
+
+fetch("/register",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+username:document.getElementById("username").value,
+email:document.getElementById("email").value,
+password:document.getElementById("password").value
+
+})
+
+})
+
+.then(res=>res.json())
+.then(data=>{
+
+alert(data.message)
+
+window.location.href="/login-page"
+
+})
+
+}
+
+</script>
+
+</body>
+
+</html>
